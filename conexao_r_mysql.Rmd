@@ -1,0 +1,6 @@
+
+```{r}
+install.packages("DBI")
+install.packages("RMySQL")  # ou RMariaDB (mais moderno)
+```
+
