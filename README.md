@@ -13,11 +13,6 @@ Este projeto tem como objetivo centralizar dados, estatísticas e análises prof
 3.  **Armazenamento:** Criação de um banco de dados relacional para histórico de partidas (SQL).
 4.  **Análise:** Aplicação de modelos lineares ou simulações de Monte Carlo (R).
 
-## 🚀 Como Executar o Projeto
-1. Clone o repositório: `git clone https://github.com/seu-usuario/World_Cup_2026.git`
-2. Instale as dependências: `pip install -r requirements.txt`
-3. Acesse a pasta `/scripts` para ver os códigos de coleta.
-
 ## 📈 Insights Principais (Work in Progress)
 - [ ] Probabilidade de avanço por grupo.
 - [ ] Impacto da altitude/clima nas sedes de 2026.
