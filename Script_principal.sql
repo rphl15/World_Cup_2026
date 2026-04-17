@@ -91,4 +91,8 @@ Cartões_amarelos_por_partida INT,
 Cartões_vermelhos INT
 );
 
+UPDATE Seleções
+SET nome = 'Coréia do Sul'
+WHERE id_selecao = 4400;
+
 
