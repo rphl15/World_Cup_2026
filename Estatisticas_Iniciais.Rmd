@@ -7,6 +7,15 @@ df <- read.csv("C:/Users/raphael.eugenio/Desktop/Raphael/paises.csv")
 ```
 
 ```{r}
+# Carregando bibliotecas
+library(dplyr)
+
+df %>%
+  filter(confederacao == 'UEFA') %>%
+  select(pais)
+```
+
+```{r}
 View(df)
 ```
 
