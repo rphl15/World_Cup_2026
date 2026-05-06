@@ -1,0 +1,64 @@
+```{r}
+library(readxl)
+library(dplyr)
+library(readr)
+library(ggplot2)
+```
+
+
+```{r}
+dados <- read_excel("C:/Users/Raphael/Downloads/estatisticas_gerais.xlsx")
+View(dados)
+```
+
+```{r}
+dados <- dados %>%
+  mutate(
+    across(
+      -Time,
+      parse_number
+    )
+  )
+```
+
+```{r}
+glimpse(dados)
+```
+
+```{r}
+summary(dados)
+```
+
+
+```{r}
+ggplot(
+  data = dados,
+  mapping = aes(x = `Gols de dentro da área`, y = `Gols marcados`)
+)+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
+
+
+```{r}
+cor.test(
+  dados$`Gols de dentro da área`,
+  dados$`Gols marcados`,
+  use = "complete.obs"
+)
+```
+
+
+```{r}
+str(dados$`Gols de dentro da área`)
+str(dados$`Gols marcados`)
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
