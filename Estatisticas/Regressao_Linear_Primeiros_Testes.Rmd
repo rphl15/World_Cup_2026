@@ -62,8 +62,8 @@ ggplot(dados, aes(x = `Total de finalizações por jogo`, y = `Gols sofridos`)) 
 
 ```{r}
 cor.test(
-  dados$`Gols de dentro da área`,
-  dados$`Gols marcados`,
+  dados$`Total de finalizações por jogo`,
+  dados$`Gols sofridos`,
   use = "complete.obs"
 )
 ```
@@ -76,6 +76,17 @@ str(dados$`Gols marcados`)
 
 
 ```{r}
+ggplot(dados, aes(x = `Total de finalizações por jogo`, y = `Gols sofridos`)) +
+  geom_point(aes(color = Continente, shape = Continente)) +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Relação entre Finalizações e Gols Sofridos",
+    subtitle = "Análise por continente",
+    x = "Finalizações por jogo",
+    y = "Gols sofridos",
+    color = "Continente",
+    shape = "Continente"
+)+ scale_color_colorblind()
 ```
 
 
