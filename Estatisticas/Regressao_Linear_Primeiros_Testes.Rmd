@@ -7,7 +7,6 @@ library(ggplot2)
 library(ggthemes)
 ```
 
-
 ```{r}
 # Trazendo o arquivo com os df coletados
 # df <- read_excel("C:/Users/Raphael/Downloads/estatisticas_gerais.xlsx")
@@ -34,13 +33,6 @@ df = normalize_column_names(df)
 View(df)
 ```
 
-
-```{r}
-
-```
-
-
-
 ```{r}
 # Arrumando os df para integer
 df <- df %>%
@@ -50,6 +42,42 @@ df <- df %>%
       parse_number
     )
   )
+```
+
+
+```{r}
+df %>%
+  select(partidas, gols_sofridos)
+
+# Primeiro Grafico
+ggplot(data = df, mapping = aes(x = partidas, y = gols_sofridos)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
+
+df$gols_marcados = df$gols_marcados / df$partidas
+df['teste'] = df['gols_marcados'] / df['partidas']
+
+df$gols_sofridos = df$gols_sofridos / df$partidas
+df$assistencias = df$assistencias / df$partidas
+df$gols_de_penalti = df$gols_de_penalti / df$partidas
+df$gols_marcados = df$gols_marcados / df$partidas
+df$gols_de_falta = df$gols_de_falta / df$partidas
+df$gols_com_a_perna_esquerda = df$gols_com_a_perna_esquerda / df$partidas
+df$gols_com_a_perna_direita = df$gols_com_a_perna_direita / df$partidas
+df$gols_de_cabeca = df$gols_de_cabeca / df$partidas
+df$finalizacoes_na_trave = df$finalizacoes_na_trave / df$partidas
+```
+
+
+```{r}
+matriz_cor <- cor(df[, sapply(df, is.numeric)], use = "complete.obs")
+matriz_cor %>% round(2)
+```
+
+
+
+```{r}
+
 ```
 
 ```{r}
