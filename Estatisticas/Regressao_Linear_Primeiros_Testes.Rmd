@@ -1,17 +1,21 @@
 ```{r}
+# Importando Bibliotecas
 library(readxl)
 library(dplyr)
 library(readr)
 library(ggplot2)
+library(ggthemes)
 ```
 
 
 ```{r}
+# Trazendo o arquivo com os dados coletados
 dados <- read_excel("C:/Users/Raphael/Downloads/estatisticas_gerais.xlsx")
 View(dados)
 ```
 
 ```{r}
+# Arruamando os dados para integer
 dados <- dados %>%
   mutate(
     across(
@@ -22,15 +26,18 @@ dados <- dados %>%
 ```
 
 ```{r}
+# Visualizando as colunas e algumas linhas
 glimpse(dados)
 ```
 
 ```{r}
+# Estruturas das colunas
 summary(dados)
 ```
 
 
 ```{r}
+# Primeiro Grafico
 ggplot(
   data = dados,
   mapping = aes(x = `Gols de dentro da área`, y = `Gols marcados`)
@@ -39,6 +46,19 @@ ggplot(
   geom_smooth(method = "lm")
 ```
 
+```{r}
+ggplot(dados, aes(x = `Total de finalizações por jogo`, y = `Gols sofridos`)) +
+  geom_point(aes(color = Continente, shape = Continente)) +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Relação entre Finalizações e Gols Sofridos",
+    subtitle = "Análise por continente",
+    x = "Finalizações por jogo",
+    y = "Gols sofridos",
+    color = "Continente",
+    shape = "Continente"
+)+ scale_color_colorblind()
+```
 
 ```{r}
 cor.test(
