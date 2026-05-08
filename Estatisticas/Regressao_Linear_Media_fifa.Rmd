@@ -1,0 +1,178 @@
+```{r}
+# Importando Bibliotecas
+library(readxl)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(ggthemes)
+library(tidyr)
+```
+
+```{r}
+pacman::p_load(clipr) # captura dos dados => write_clip
+capture = function(tabela, col_names=TRUE, pontuacao=','){
+  tabela %>% print() %>% write_clip(dec = pontuacao, col.names = col_names)
+}
+```
+
+```{r}
+# Trazendo o arquivo com os df coletados
+# df <- read_excel("C:/Users/Raphael/Downloads/estatisticas_gerais.xlsx")
+df <- read_excel("C:/Users/raphael.eugenio/Desktop/Raphael/WC26/media_fifa.xlsx")
+
+# Transpondo o df
+df = t(df)
+df = data.frame(df)
+colnames(df[1,])
+
+# Tornando a primeira linha como coluna
+colnames(df) <- df[1, ]
+df <- df[-1, ] # Removendo a primeira linha
+
+library(stringr)
+normalize_column_names <- function(df){
+  # Remover acentuação
+  colnames(df) <- iconv(colnames(df), from = "UTF-8", to = "ASCII//TRANSLIT")
+  # Converter para minúsculas
+  colnames(df) <- tolower(colnames(df))
+  # Substituir espaços por underscores
+  colnames(df) <- str_replace_all(colnames(df), " ", "_")
+  # Remover caracteres especiais, mantendo apenas letras, números e underscores
+  colnames(df) <- gsub("[^a-z0-9_]", "", colnames(df))
+  # Substituir múltiplos underscores consecutivos por um único underscore
+  colnames(df) <- gsub("+", "", colnames(df))
+  # Remover underscores no início ou fim dos nomes de colunas
+  colnames(df) <- gsub("^|$", "", colnames(df))
+  return(df)
+}
+df = normalize_column_names(df)
+
+View(df)
+```
+
+```{r}
+# Arrendondando para uma casa decimal
+# Converte tudo para numérico forçando, depois arredonda
+df[] <- lapply(df, function(x) {
+  x_num <- suppressWarnings(as.numeric(x))
+  if (all(is.na(x_num))) x else round(x_num, 1)
+})
+View(df)
+```
+
+```{r}
+colnames(df)
+
+# Primeiro Grafico
+ggplot(data = df, mapping = aes(x = ataque, y = chutes_no_gol)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
+```
+
+```{r}
+# Mostra todas as correlações possiveis
+matriz_cor <- cor(df[, sapply(df, is.numeric)], use = "complete.obs")
+matriz_cor %>% round(2)
+capture(round(matriz_cor, 2))
+```
+
+
+```{r}
+# Visualizando as colunas e algumas linhas
+glimpse(df)
+```
+
+```{r}
+# Estruturas das colunas
+summary(df)
+```
+
+
+
+```{r}
+# Primeiro Grafico
+ggplot(
+  data = df,
+  mapping = aes(x = gols_de_dentro_da_area, y = gols_marcados)
+)+
+  geom_point()+
+  geom_smooth()
+```
+
+```{r}
+ggplot(df, aes(x = passes_decisivos, y = chances_perigosas_criadas)) +
+  geom_point(aes(color = continente)) +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Relação entre Passes Decisivos e Chances Perigosas Criadas",
+    subtitle = "Análise por pais",
+    x = "Passes Decisivos",
+    y = "Chances Perigosas Criadas",
+    color = "Continente",
+    shape = "continente"
+)+ scale_color_colorblind()
+```
+
+```{r}
+print("Modelo Simples")
+modelo <- lm(chances_perigosas_criadas ~ passes_decisivos, data=df)
+summary(modelo)
+```
+
+```{r}
+print('modelo simples')
+modelo = lm(gols_sofridos ~ total_de_finalizacoes_por_jogo, data=df)
+summary(modelo)
+
+print('modelo multi 1')
+modelo = lm(gols_sofridos ~ total_de_finalizacoes_por_jogo + assistencias + grandes_chances_perdidas_por_jogo + chutes_errados_por_jogo, data=df)
+summary(modelo)
+
+cor.test(
+  df$total_de_finalizacoes_por_jogo,
+  df$gols_sofridos,
+  use = "complete.obs"
+)
+```
+
+
+```{r}
+str(df$gols_de_dentro_da_area)
+str(df$gols_marcados)
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+ggplot(df, aes(x = posse_de_bola, y = gols_sofridos)) +
+  geom_point(aes(color = continente, shape = continente)) +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Relação entre Posse de bola e Gols sofridos",
+    subtitle = "Análise por continente",
+    x = "Posse de bola",
+    y = "Gols sofridos",
+    color = "continente",
+    shape = "continente"
+)
+```
+```{r}
+print('modelo simples')
+modelo = lm(posse_de_bola ~ gols_sofridos, data=df)
+summary(modelo)
+
+print('modelo multi 1')
+modelo = lm(posse_de_bola ~ gols_sofridos + , data=df)
+summary(modelo)
+
+cor.test(
+  df$total_de_finalizacoes_por_jogo,
+  df$gols_sofridos,
+  use = "complete.obs"
+)
+```
+
