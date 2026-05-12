@@ -97,22 +97,22 @@ ggplot(
 ```
 
 ```{r}
-ggplot(df, aes(x = passes_decisivos, y = chances_perigosas_criadas)) +
+ggplot(df, aes(x = gols_feitos, y = passes_para_tras)) +
   geom_point(aes(color = continente)) +
-  geom_smooth(method = "lm") +
+  geom_smooth(method = "lm", col = "black") +
   labs(
-    title = "Relação entre Passes Decisivos e Chances Perigosas Criadas",
-    subtitle = "Análise por pais",
-    x = "Passes Decisivos",
-    y = "Chances Perigosas Criadas",
+    title = "Relação entre Gols e Passes para trás",
+    subtitle = "Análise por pais classificado para Copa do Mundo",
+    x = "Gols",
+    y = "Passes para trás",
     color = "Continente",
     shape = "continente"
-)+ scale_color_colorblind()
+)
 ```
 
 ```{r}
 print("Modelo Simples")
-modelo <- lm(chances_perigosas_criadas ~ passes_decisivos, data=df)
+modelo <- lm(gols_feitos , passes_para_tras, data=df)
 summary(modelo)
 ```
 
@@ -135,10 +135,6 @@ cor.test(
 ```{r}
 str(df$gols_de_dentro_da_area)
 str(df$gols_marcados)
-```
-
-```{r}
-
 ```
 
 ```{r}
