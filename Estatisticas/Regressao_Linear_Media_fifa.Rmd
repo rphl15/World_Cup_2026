@@ -18,7 +18,7 @@ capture = function(tabela, col_names=TRUE, pontuacao=','){
 ```{r}
 # Trazendo o arquivo com os df coletados
 # df <- read_excel("C:/Users/Raphael/Downloads/estatisticas_gerais.xlsx")
-df <- read_excel("C:/Users/raphael.eugenio/Desktop/Raphael/WC26/media_fifa.xlsx")
+df <- read_excel("C:/Users/raphael.eugenio/Desktop/Raphael/WC26/Scripts/media_fifa.xlsx")
 
 # Transpondo o df
 df = t(df)
@@ -76,7 +76,6 @@ matriz_cor %>% round(2)
 capture(round(matriz_cor, 2))
 ```
 
-
 ```{r}
 # Visualizando as colunas e algumas linhas
 glimpse(df)
@@ -86,8 +85,6 @@ glimpse(df)
 # Estruturas das colunas
 summary(df)
 ```
-
-
 
 ```{r}
 # Primeiro Grafico
@@ -135,17 +132,14 @@ cor.test(
 )
 ```
 
-
 ```{r}
 str(df$gols_de_dentro_da_area)
 str(df$gols_marcados)
 ```
 
-
 ```{r}
 
 ```
-
 
 ```{r}
 ggplot(df, aes(x = posse_de_bola, y = gols_sofridos)) +
