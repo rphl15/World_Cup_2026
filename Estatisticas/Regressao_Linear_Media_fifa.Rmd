@@ -61,6 +61,10 @@ View(df)
 ```
 
 ```{r}
+table(df$continente)
+```
+
+```{r}
 colnames(df)
 
 # Primeiro Grafico
