@@ -24,7 +24,7 @@ from openpyxl.utils import get_column_letter
 PLANILHA = "Copa_2026_Estatisticas.xlsx"
 
 try:
-    os.chdir(r"C:\Users\Raphael\OneDrive\Documentos")
+    os.chdir(r"C:\Users\raphael.eugenio\Downloads")
 except OSError:
     pass
 
